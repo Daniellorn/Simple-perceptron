@@ -12,15 +12,16 @@
 
 std::vector<Input> LoadData(std::ifstream& file)
 {
-    std::vector<Input> inputs;
-    Input current;
-    current.pixels[0] = 1;
+    std::vector<Input> inputs(100);
 
     std::string line;
     int numline = 0;
 
     while(std::getline(file, line))
     {
+        Input current;
+        current.pixels[0] = 1;
+
         std::istringstream iss(line);
         numline++;
 
