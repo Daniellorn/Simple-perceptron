@@ -26,6 +26,12 @@ qt_add_qml_module(appNumbersPerceptron
         SOURCES Backend/classifier.h Backend/classifier.cpp
 )
 
+target_compile_options(appNumbersPerceptron PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:/arch:AVX2>
+    $<$<CXX_COMPILER_ID:GNU>:-mavx2 -mfma>
+    $<$<CXX_COMPILER_ID:Clang>:-mavx2 -mfma>
+)
+
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.

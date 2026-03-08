@@ -17,22 +17,30 @@ float Utils::RandomFloat(float min, float max)
 
 float Utils::DotProduct(const std::array<int, 36>& input, const std::array<float, 36>& weights)
 {
-    __m128 sum = _mm_setzero_ps();
+    __m256 sum = _mm256_setzero_ps();
 
-    for (int i = 0; i < 32; i+=4)
+    constexpr int FLOATS_IN_AVX_REGISTER = 8;
+    const int samples = (input.size() / FLOATS_IN_AVX_REGISTER) * FLOATS_IN_AVX_REGISTER;
+
+    for (int i = 0; i < samples; i+=FLOATS_IN_AVX_REGISTER)
     {
-        __m128 w = _mm_loadu_ps(&weights[i]);
-        __m128i inputs = _mm_loadu_si128((__m128i*)&input[i]);
-        __m128 inputsFloats = _mm_cvtepi32_ps(inputs);
+        __m256 w = _mm256_loadu_ps(weights.data() + i);
 
-        sum = _mm_add_ps(sum, _mm_mul_ps(w, inputsFloats));
+        __m256i inputs = _mm256_loadu_si256((__m256i*)(input.data() + i));
+
+        __m256 inputsFloats = _mm256_cvtepi32_ps(inputs);
+        sum = _mm256_add_ps(sum, _mm256_mul_ps(w, inputsFloats));
     }
 
-    alignas(16) float temp[4];
-    _mm_store_ps(temp, sum);
-    float dotpr = temp[0] + temp[1] + temp[2] + temp[3];
+    __m128 lo = _mm256_castps256_ps128(sum);
+    __m128 hi = _mm256_extractf128_ps(sum, 1);
+    __m128 s128 = _mm_add_ps(lo, hi);
 
-    for (int i = 32; i < 36; i++)
+    s128 = _mm_hadd_ps(s128, s128);
+    s128 = _mm_hadd_ps(s128, s128);
+    float dotpr = _mm_cvtss_f32(s128);
+
+    for (int i = samples; i < 36; i++)
     {
         dotpr += (float)input[i] * weights[i];
     }
