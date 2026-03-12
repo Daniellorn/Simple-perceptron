@@ -13,3 +13,8 @@ int Classifier::check(const QVariantList &pixels)
 
     return Perceptron::Predict(input, m_Net);
 }
+
+int Classifier::getError()
+{
+    return Perceptron::GetErrors();
+}

@@ -13,6 +13,7 @@ public:
     static int RandomInt(int max);
     static float RandomFloat(float min, float max);
     static float DotProduct(const std::array<int, 36>& input, const std::array<float, 36>& weights);
+
     Q_INVOKABLE void saveInput(const QVariantList& gridlist);
 
 private:

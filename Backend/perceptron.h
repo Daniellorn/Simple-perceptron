@@ -21,11 +21,13 @@ public:
     static int Predict(const std::array<int, 36>& pixels, const std::array<Perceptron, 10>& net);
 
     const std::array<float, 36>& GetWeights() const { return m_Weights; }
+    static int GetErrors() { return m_ErrorsNumber; }
 
 private:
     std::array<float, 36> m_Weights;
     std::array<float, 36> m_Pocket;
     int m_Target;
+    static inline int m_ErrorsNumber = 0;
 };
 
 

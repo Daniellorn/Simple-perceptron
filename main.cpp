@@ -2,6 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include <QDebug>
+#include <iostream>
+
 #include "Backend/Utils.h"
 #include "Backend/perceptron.h"
 #include "Backend/classifier.h"
@@ -12,7 +15,8 @@
 
 std::vector<Input> LoadData(std::ifstream& file)
 {
-    std::vector<Input> inputs(100);
+    std::vector<Input> inputs;
+    inputs.reserve(100);
 
     std::string line;
     int numline = 0;

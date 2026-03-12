@@ -13,6 +13,7 @@ public:
         QObject(parent), m_Net(net){}
 
     Q_INVOKABLE int check(const QVariantList& pixels);
+    Q_INVOKABLE int getError();
 
 private:
     std::array<Perceptron, 10> m_Net;

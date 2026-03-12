@@ -8,6 +8,27 @@ ColumnLayout{
     spacing: 40
 
     Rectangle{
+        id: errorbox
+        color: "black"
+        border.width: 0.5
+
+        Layout.preferredHeight: 180
+        Layout.preferredWidth: 280
+        Layout.alignment: Qt.AlignHCenter
+        Layout.topMargin: 50
+
+        Text{
+            id: errorDisplay
+            text: "Error: " + backend.getError().toString();
+            color: "white"
+            font.pixelSize: 40
+            font.bold: true
+
+            anchors.centerIn: parent
+        }
+    }
+
+    Rectangle{
         id: resultbox
         color: "black"
         border.width: 0.5

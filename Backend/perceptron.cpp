@@ -41,6 +41,7 @@ void Perceptron::Train(const std::vector<Input>& input, int iterations)
         }
         else
         {
+            m_ErrorsNumber++;
             for (int j = 0; j < 36; j++)
             {
                 m_Weights[j] += learningRate * error * sample.pixels[j];
