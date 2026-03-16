@@ -5,6 +5,11 @@ import QtQuick.Controls
 
 ColumnLayout{
 
+    function updateResult(value)
+    {
+        display.text = value.toString();
+    }
+
     spacing: 40
 
     Rectangle{

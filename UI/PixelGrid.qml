@@ -7,6 +7,8 @@ Rectangle {
 
     property var gridData: Array(36).fill(-1)
 
+    signal requestCheck()
+
     function updateArray(index, filled)
     {
         var newArray = gridData.slice();
@@ -44,7 +46,7 @@ Rectangle {
                     onClicked: {
                         var newState = (pixelgrid.gridData[index] !== 1);
                         pixelgrid.updateArray(index, newState);
-
+                        requestCheck();
                     }
                 }
             }

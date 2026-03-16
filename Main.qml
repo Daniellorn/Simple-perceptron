@@ -29,6 +29,12 @@ Window {
                     Layout.preferredWidth: parent.width * 0.6
                     Layout.fillHeight: true
                     //Layout.preferredHeight: 680
+
+                    onRequestCheck:
+                    {
+                        var result = backend.check(pixelgrid.gridData)
+                        rightpanel.updateResult(result);
+                    }
                 }
 
                 RightPanel{
